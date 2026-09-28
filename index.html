@@ -1,0 +1,250 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#7c4dff">
+<title>Весёлые буквы 2.0 ⭐</title>
+<style>
+:root{--purple:#7c4dff;--pink:#ff5c8a;--yellow:#ffca28;--green:#35b86b;--blue:#42a5f5;--ink:#27324a;--card:#fff;--bg1:#fff4d6;--bg2:#dff5ff}
+*{box-sizing:border-box}html,body{margin:0;min-height:100%;font-family:"Arial Rounded MT Bold","Trebuchet MS",Arial,sans-serif;color:var(--ink)}
+body{background:linear-gradient(135deg,var(--bg1),var(--bg2));padding-bottom:env(safe-area-inset-bottom)}
+button{font:inherit;border:0;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.app{width:min(900px,100%);margin:auto;padding:12px}
+header{text-align:center;padding:8px 4px 10px}
+h1{margin:0;color:var(--purple);font-size:clamp(28px,7vw,46px)}
+.sub{font-size:15px;margin-top:4px}
+.toolbar{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin:8px 0}
+.pill{background:#fff;border-radius:999px;padding:10px 15px;box-shadow:0 3px 12px #0001;font-weight:800}
+.pill.active{background:var(--purple);color:#fff}
+.stats{background:#fff;border-radius:22px;padding:12px 15px;box-shadow:0 5px 18px #0001;margin-bottom:10px}
+.statsrow{display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap;font-size:14px;font-weight:700}
+.bar{height:12px;background:#edf0f5;border-radius:99px;overflow:hidden;margin-top:8px}.bar>i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--yellow),var(--pink));transition:.5s}
+.card{background:rgba(255,255,255,.96);border-radius:30px;padding:18px 14px 22px;box-shadow:0 12px 35px #0002;text-align:center;overflow:hidden}
+.character{font-size:72px;line-height:1;animation:bob 2s infinite ease-in-out}
+@keyframes bob{50%{transform:translateY(-7px) rotate(2deg)}}
+.speech{display:inline-block;background:#fff3cd;border-radius:18px;padding:10px 14px;margin:4px auto 10px;font-weight:800;max-width:650px}
+.letter{font-size:clamp(82px,23vw,150px);line-height:.9;font-weight:1000;color:var(--pink);text-shadow:0 7px 0 #ffd1df;animation:pop .45s}
+@keyframes pop{0%{transform:scale(.5);opacity:.2}100%{transform:scale(1);opacity:1}}
+.emoji{font-size:clamp(58px,16vw,90px);margin:8px}.word{font-size:clamp(25px,7vw,36px);font-weight:1000;color:var(--purple)}.desc{font-size:17px;line-height:1.35;max-width:620px;margin:5px auto 12px}
+.task{font-size:clamp(20px,5.5vw,27px);font-weight:900;margin:16px 0 12px}
+.answers{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;max-width:650px;margin:auto}.ans{min-height:64px;border-radius:20px;background:#e9f4ff;color:#1769aa;padding:10px;font-weight:900;font-size:clamp(19px,5vw,27px);box-shadow:0 4px 0 #c8dfef}.ans:active{transform:translateY(3px);box-shadow:none}
+.action{background:var(--purple);color:#fff;border-radius:18px;padding:12px 16px;margin:6px 3px;font-weight:900}.action.green{background:var(--green)}.action.pink{background:var(--pink)}.action.gray{background:#667085}
+.feedback{min-height:38px;font-size:21px;font-weight:900;margin-top:10px}.next{display:none}
+.badges{margin:8px 0;font-size:24px;min-height:28px}.chest{display:none;background:linear-gradient(135deg,#fff3a6,#ffd166);border-radius:25px;padding:18px;margin:14px auto;max-width:560px;animation:chest .5s}.chest.show{display:block}@keyframes chest{from{transform:scale(.7) rotate(-4deg)}to{transform:scale(1)}}
+.hidden{display:none!important}.modal{position:fixed;inset:0;background:#172033aa;display:flex;align-items:flex-end;justify-content:center;padding:10px;z-index:10}.modalbox{width:min(720px,100%);max-height:90vh;overflow:auto;background:#fff;border-radius:28px;padding:20px}.modalbox h2{margin-top:0;color:var(--purple)}.statgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.statitem{background:#f5f7fb;border-radius:18px;padding:14px;font-weight:800}.wordbuild{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;min-height:60px;margin:10px}.chip{background:#ffe082;border-radius:15px;padding:10px 14px;font-size:26px;font-weight:900}.listen{background:#eef0ff;color:#5141b8}
+.footer{text-align:center;font-size:12px;padding:10px;color:#667085}
+@media(max-width:520px){.app{padding:8px}.card{border-radius:24px;padding:15px 10px 20px}.answers{grid-template-columns:1fr}.ans{min-height:58px}.toolbar{gap:5px}.pill{padding:9px 11px}.character{font-size:60px}.speech{font-size:14px}}
+</style>
+</head>
+<body>
+<div class="app">
+<header>
+<h1>🌈 Весёлые буквы 2.0 ⭐</h1>
+<div class="sub">Играй • говори • слушай • собирай награды</div>
+</header>
+
+<div class="toolbar" id="langs">
+<button class="pill active" data-lang="ru">🇷🇺 Русский</button>
+<button class="pill" data-lang="en">🇬🇧 English</button>
+<button class="pill" data-lang="kk">🇰🇿 Қазақша</button>
+</div>
+<div class="toolbar">
+<button class="pill active" data-mode="letters">🔤 Буквы</button>
+<button class="pill" data-mode="words">🧩 Слова</button>
+<button class="pill" data-mode="read">📚 Читаем</button>
+<button class="pill" id="parentBtn">👨‍👩‍👧 Родителям</button>
+</div>
+
+<div class="stats">
+<div class="statsrow"><span>⭐ <b id="stars">0</b></span><span>🔥 Серия: <b id="streak">0</b></span><span>🏆 Медали: <b id="medals">0</b></span><span>🔤 <b id="done">0</b>/<b id="total">33</b></span></div>
+<div class="bar"><i id="progress"></i></div>
+</div>
+
+<main class="card" id="game">
+<div class="character" id="bear">🐻</div>
+<div class="speech" id="speech">Привет! Давай учить буквы! 🌟</div>
+<div class="letter" id="letter">А</div>
+<div class="emoji" id="emoji">🍎</div>
+<div class="word" id="word">Арбуз</div>
+<div class="desc" id="desc">Большой, зелёный снаружи и сладкий внутри.</div>
+
+<button class="action listen" id="soundBtn">🔊 Звук буквы</button>
+<button class="action" id="wordSoundBtn">🗣️ Слово</button>
+
+<div class="task" id="task"></div>
+<div id="wordBuild" class="wordbuild hidden"></div>
+<div class="answers" id="answers"></div>
+<div class="feedback" id="feedback"></div>
+
+<div class="chest" id="chest">
+<div style="font-size:60px">🎁🧰</div>
+<b>Сундук открыт!</b>
+<div id="chestText"></div>
+</div>
+
+<button class="action green next" id="nextBtn">➡️ Следующий раунд</button>
+<button class="action pink hidden" id="micBtn">🎤 Скажи ответ</button>
+</main>
+
+<div class="footer">Прогресс сохраняется на этом устройстве автоматически.</div>
+</div>
+
+<div class="modal hidden" id="parentModal">
+<div class="modalbox">
+<h2>👨‍👩‍👧 Родительский режим</h2>
+<div class="statgrid">
+<div class="statitem">⭐ Звёзды<br><span id="pStars">0</span></div>
+<div class="statitem">🏆 Медали<br><span id="pMedals">0</span></div>
+<div class="statitem">🔥 Лучшая серия<br><span id="pBest">0</span></div>
+<div class="statitem">🔤 Пройдено<br><span id="pDone">0</span></div>
+</div>
+<h3>Прогресс по языкам</h3>
+<div id="langStats"></div>
+<p>🎤 Распознавание речи работает в браузерах, которые его поддерживают. Для микрофона потребуется разрешение.</p>
+<button class="action gray" id="resetBtn">♻️ Сбросить прогресс</button>
+<button class="action" id="closeParent">Закрыть</button>
+</div>
+</div>
+
+<script>
+/*
+ Весёлые буквы 2.0
+ Важно: данные сохранены в одном HTML-файле.
+*/
+
+const DATA={
+ru:[
+["А","Арбуз","🍉","Большой, зелёный снаружи и сладкий внутри.","а"],
+["Б","Бабочка","🦋","Летает и машет крылышками.","б"],
+["В","Волк","🐺","Живёт в лесу.","в"],["Г","Груша","🍐","Сладкий фрукт.","г"],
+["Д","Дом","🏠","В нём живут люди.","д"],["Е","Енот","🦝","Маленький зверёк.","йэ"],
+["Ё","Ёж","🦔","У него много иголок.","йо"],["Ж","Жираф","🦒","У него длинная шея.","ж"],
+["З","Заяц","🐰","Прыгает и любит морковку.","з"],["И","Иголка","🪡","Тонкая и острая.","и"],
+["Й","Йогурт","🥛","Вкусный молочный продукт.","й"],["К","Кот","🐱","Любит мурлыкать.","к"],
+["Л","Лев","🦁","Большая кошка с гривой.","л"],["М","Мишка","🐻","Большой лесной зверь.","м"],
+["Н","Носорог","🦏","У него есть рог.","н"],["О","Облако","☁️","Плывёт по небу.","о"],
+["П","Панда","🐼","Любит бамбук.","п"],["Р","Рыба","🐟","Плавает в воде.","р"],
+["С","Слон","🐘","Большой, с длинным хоботом.","с"],["Т","Тигр","🐯","Полосатая большая кошка.","т"],
+["У","Утка","🦆","Плавает и говорит «кря».","у"],["Ф","Фламинго","🦩","Розовая птица.","ф"],
+["Х","Хомяк","🐹","Маленький пушистый зверёк.","х"],["Ц","Цветок","🌸","Красиво цветёт.","ц"],
+["Ч","Черепаха","🐢","Носит панцирь.","ч"],["Ш","Шар","🎈","Круглый и лёгкий.","ш"],
+["Щ","Щётка","🪥","Чистит зубы.","щ"],["Ъ","Подъезд","🏢","Вход в дом.","твёрдый знак"],
+["Ы","Мышь","🐭","Маленький серый зверёк.","ы"],["Ь","Семья","👨‍👩‍👧","Близкие люди.","мягкий знак"],
+["Э","Экскаватор","🚜","Копает землю.","э"],["Ю","Юла","🪀","Крутится.","ю"],["Я","Яблоко","🍎","Красное и вкусное.","я"]
+],
+en:[
+["A","Apple","🍎","A red fruit.","эй"],["B","Ball","⚽","Round and fun.","би"],["C","Cat","🐱","A small animal.","си"],["D","Dog","🐶","A friendly animal.","ди"],["E","Elephant","🐘","A very big animal.","и"],["F","Fish","🐟","It swims.","эф"],["G","Giraffe","🦒","A long neck.","джи"],["H","House","🏠","People live inside.","эйч"],["I","Ice cream","🍦","Cold and sweet.","ай"],["J","Juice","🧃","A tasty drink.","джей"],["K","Kite","🪁","It flies.","кей"],["L","Lion","🦁","A big cat.","эл"],["M","Moon","🌙","We see it at night.","эм"],["N","Nose","👃","We smell with it.","эн"],["O","Orange","🍊","A round fruit.","оу"],["P","Penguin","🐧","A bird.","пи"],["Q","Queen","👑","A woman with a crown.","кью"],["R","Rabbit","🐰","Likes carrots.","ар"],["S","Sun","☀️","It shines.","эс"],["T","Tiger","🐯","A striped cat.","ти"],["U","Umbrella","☂️","Keeps us dry.","ю"],["V","Van","🚐","A big car.","ви"],["W","Whale","🐋","A big sea animal.","дабл-ю"],["X","Xylophone","🎵","A musical instrument.","экс"],["Y","Yo-yo","🪀","Goes up and down.","уай"],["Z","Zebra","🦓","A striped animal.","зи"]
+],
+kk:[
+["А","Аю","🐻","Үлкен орман жануары.","а"],["Ә","Әтеш","🐓","Таңертең шақырады.","ә"],["Б","Балық","🐟","Суда жүзеді.","б"],["В","Велосипед","🚲","Онымен жүреміз.","в"],["Г","Гүл","🌸","Әдемі болып өседі.","г"],["Ғ","Ғарыш","🚀","Жұлдыздар әлемі.","ғ"],["Д","Доп","⚽","Домалақ және ойнаймыз.","д"],["Е","Елік","🦌","Орманда жүретін жануар.","е"],["Ё","Ёлка","🎄","Жаңа жылда безендіреміз.","йо"],["Ж","Жылқы","🐎","Жүгіретін жануар.","ж"],["З","Зымыран","🚀","Ғарышқа ұшады.","з"],["И","Ит","🐶","Адамның досы.","и"],["Й","Йогурт","🥛","Дәмді тағам.","й"],["К","Күн","☀️","Аспанда жарқырайды.","к"],["Қ","Қоян","🐰","Сәбізді жақсы көреді.","қ"],["Л","Лақ","🐐","Кішкентай ешкі.","л"],["М","Мысық","🐱","Мияулайды.","м"],["Н","Нан","🍞","Дәмді тағам.","н"],["Ң","Аң","🦊","Орманда өмір сүретін жануар.","ң"],["О","Орамал","🧣","Басқа тағамыз.","о"],["Ө","Өрік","🍑","Тәтті жеміс.","ө"],["П","Піл","🐘","Үлкен жануар.","п"],["Р","Робот","🤖","Қимылдай алады.","р"],["С","Сиыр","🐄","Үй жануары.","с"],["Т","Түйе","🐫","Шөлде жүре алады.","т"],["У","Уық","🏠","Киіз үйдің бөлігі.","у"],["Ұ","Ұшақ","✈️","Аспанда ұшады.","ұ"],["Ү","Үй","🏠","Біз онда тұрамыз.","ү"],["Ф","Футбол","⚽","Доппен ойналады.","ф"],["Х","Хат","✉️","Хабар жібереміз.","х"],["Һ","Һәмеле","🌿","Сирек кездесетін әріп.","һ"],["Ц","Цирк","🎪","Қызықты өнер көрсетіледі.","ц"],["Ч","Чемодан","🧳","Сапарға зат саламыз.","ч"],["Ш","Шана","🛷","Қыста сырғанаймыз.","ш"],["Щ","Щетка","🪥","Тіс тазалаймыз.","щ"],["Ъ","Ъ","🔤","Қазақ сөздерінде қолданылмайды.",""],["Ы","Ыдыс","🥣","Оған тамақ саламыз.","ы"],["І","Ін","🦊","Жануардың жердегі үйі.","і"],["Ь","Ь","🔤","Қазақ сөздерінде қолданылмайды.",""],["Э","Электр","💡","Шамды жағуға көмектеседі.","э"],["Ю","Юбка","👗","Киімнің бір түрі.","ю"],["Я","Ядро","🫘","Жемістің ішіндегі дәні.","я"]
+]};
+
+const LANGS={ru:"ru-RU",en:"en-US",kk:"kk-KZ"};
+const state={lang:"ru",mode:"letters",index:0,stars:0,streak:0,best:0,medals:0,done:{ru:0,en:0,kk:0}};
+let currentTask=null,recognized=false;
+
+function load(){
+ try{const x=JSON.parse(localStorage.getItem("bukvy20"));if(x)Object.assign(state,x)}catch(e){}
+ if(!state.done)state.done={ru:0,en:0,kk:0};
+}
+function save(){localStorage.setItem("bukvy20",JSON.stringify(state))}
+function arr(){return DATA[state.lang]}
+function current(){return arr()[state.index%arr().length]}
+function speak(t,rate=.8){
+ if(!("speechSynthesis"in window))return;
+ speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(t);u.lang=LANGS[state.lang];u.rate=rate;u.pitch=1.08;speechSynthesis.speak(u)
+}
+function letterSound(){
+ const a=current(); if(!a[4]){speak(a[0]);return}
+ speak(a[4],.7)
+}
+function setText(){
+ const a=current();letter.textContent=a[0];emoji.textContent=a[2];word.textContent=a[1];desc.textContent=a[3];
+ total.textContent=arr().length;done.textContent=Math.min(state.index,state.done[state.lang]||0);
+ stars.textContent=state.stars;streak.textContent=state.streak;medals.textContent=state.medals;
+ progress.style.width=(Math.min(state.index,arr().length)/arr().length*100)+"%";
+}
+function randomItems(n,exclude){
+ const out=[];while(out.length<n){const a=arr()[Math.floor(Math.random()*arr().length)];if(!out.includes(a)&&a!==exclude)out.push(a)}return out
+}
+function render(){
+ recognized=false;currentTask=null;document.getElementById("chest").classList.remove("show");nextBtn.style.display="none";
+ const a=current();setText();speech.textContent=state.mode==="letters"?"Давай познакомимся с этой буквой! 🐻":state.mode==="words"?"Давай поиграем со словами! 🧩":"Давай попробуем прочитать! 📚";
+ if(state.mode==="letters")taskLetters(a); else if(state.mode==="words")taskWords(a); else taskRead(a);
+}
+function taskLetters(a){
+ task.textContent=`🔎 Найди букву «${a[0]}»`;
+ const opts=[a,...randomItems(2,a)].sort(()=>Math.random()-.5);makeButtons(opts,x=>x[0]===a[0]);
+}
+function taskWords(a){
+ task.textContent=`🧐 Что начинается на «${a[0]}»?`;
+ const opts=[a,...randomItems(2,a)].sort(()=>Math.random()-.5);makeButtons(opts,x=>x[0]===a[0],true);
+}
+function taskRead(a){
+ task.textContent=`📚 Собери слово: ${a[1]}`;
+ const chars=[...a[1].replace(/[^A-Za-zА-Яа-яӘәҒғҚқҢңӨөҰұҮүҺһІі]/g,"").toUpperCase()];
+ wordBuild.classList.remove("hidden");wordBuild.innerHTML="";
+ chars.forEach((c,i)=>{const b=document.createElement("button");b.className="chip";b.textContent=c;b.onclick=()=>readLetter(c,b);wordBuild.appendChild(b)});
+ const extra=randomItems(1,a)[0][1][0]?.toUpperCase(); if(extra){const b=document.createElement("button");b.className="chip";b.textContent=extra;b.onclick=()=>readLetter(extra,b);wordBuild.appendChild(b)}
+ answers.innerHTML="";feedback.textContent="Нажимай буквы по порядку слова 👆";
+}
+function readLetter(c,b){
+ if(recognized)return;
+ const a=current();const chars=[...a[1].replace(/[^A-Za-zА-Яа-яӘәҒғҚқҢңӨөҰұҮүҺһІі]/g,"").toUpperCase()];
+ const picked=[...wordBuild.querySelectorAll(".chip.picked")].map(x=>x.textContent);
+ const need=chars[picked.length];
+ if(c===need){b.classList.add("picked");b.disabled=true;speak(c,.65);if(picked.length+1===chars.length)success()}else{feedback.textContent="🐻 Почти! Посмотри на слово ещё раз."}
+}
+function makeButtons(opts,isCorrect,word=false){
+ answers.innerHTML="";wordBuild.classList.add("hidden");
+ opts.forEach(x=>{const b=document.createElement("button");b.className="ans";b.textContent=word?`${x[2]} ${x[1]}`:`${x[0]} ${x[2]}`;b.onclick=()=>isCorrect(x)?success():wrong();answers.appendChild(b)})
+}
+function success(){
+ if(recognized)return;recognized=true;state.stars++;state.streak++;state.best=Math.max(state.best,state.streak);
+ if(state.streak%3===0){state.medals++;medals.textContent=state.medals;feedback.textContent="🏆 Новая медаль! Серия "+state.streak+"!"}else feedback.textContent="🎉 Молодец! Правильно! ⭐";
+ speech.textContent=state.streak>=3?"🐻 Ух ты! Отличная серия!":"🐻 Ура! Так держать!";
+ const before=Math.floor(state.index/5),after=Math.floor((state.index+1)/5);
+ state.done[state.lang]=Math.max(state.done[state.lang]||0,state.index+1);
+ if(after>before||((state.index+1)%5===0)){chest.classList.add("show");chestText.textContent="Ты прошёл ещё 5 букв! В сундуке ⭐ + 🎖️!"}
+ save();setText();nextBtn.style.display="inline-block";speak("Молодец! Правильно!")
+}
+function wrong(){
+ state.streak=0;save();setText();feedback.textContent="😊 Почти! Попробуй ещё раз.";speech.textContent="🐻 Ничего страшного! Попробуй ещё раз.";
+}
+function next(){state.index++;if(state.index>=arr().length){state.index=0;speech.textContent="🎉 Круг завершён! Давай ещё раз!"}save();render()}
+function finish(){}
+function setup(){
+ load();state.index=Math.min(state.index||0,arr().length-1);
+ document.querySelectorAll("[data-lang]").forEach(b=>b.onclick=()=>{state.lang=b.dataset.lang;state.index=0;document.querySelectorAll("[data-lang]").forEach(x=>x.classList.toggle("active",x===b));save();render()});
+ document.querySelectorAll("[data-mode]").forEach(b=>b.onclick=()=>{state.mode=b.dataset.mode;document.querySelectorAll("[data-mode]").forEach(x=>x.classList.toggle("active",x===b));render()});
+ soundBtn.onclick=letterSound;wordSoundBtn.onclick=()=>speak(current()[1]);
+ nextBtn.onclick=next;
+ parentBtn.onclick=()=>{pStars.textContent=state.stars;pMedals.textContent=state.medals;pBest.textContent=state.best;pDone.textContent=Object.values(state.done).reduce((a,b)=>a+b,0);langStats.innerHTML=Object.entries(state.done).map(([k,v])=>`<p>${k==="ru"?"🇷🇺 Русский":k==="en"?"🇬🇧 English":"🇰🇿 Қазақша"} — ${v}/${DATA[k].length}</p>`).join("");parentModal.classList.remove("hidden")};
+ closeParent.onclick=()=>parentModal.classList.add("hidden");
+ resetBtn.onclick=()=>{if(confirm("Сбросить весь прогресс?")){localStorage.removeItem("bukvy20");location.reload()}};
+ render();
+}
+setup();
+
+/* Распознавание речи */
+const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+if(SR){
+ const r=new SR();r.continuous=false;r.interimResults=false;
+ micBtn.classList.remove("hidden");
+ micBtn.onclick=()=>{
+   r.lang=LANGS[state.lang];r.start();speech.textContent="🐻 Я слушаю... Говори!";
+   r.onresult=e=>{
+     const said=e.results[0][0].transcript.trim().toLowerCase();
+     const a=current();
+     const target=state.mode==="letters"?a[0].toLowerCase():a[1].toLowerCase();
+     if(said===target||said.includes(target))success();else{feedback.textContent=`😊 Я услышал: «${said}». Попробуй ещё раз!`;state.streak=0;save()}
+   };
+   r.onerror=()=>{feedback.textContent="🎤 Не получилось услышать. Попробуй ещё раз."}
+ }
+}else{
+ micBtn.classList.add("hidden");
+}
+</script>
+</body>
+</html>
